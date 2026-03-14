@@ -1,0 +1,71 @@
+﻿@model IntellAccount.ViewModels.AnalyzeResult
+@{
+    ViewData["Title"] = "Analyze";
+}
+
+<h2>Análise de Imagem</h2>
+
+@using (Html.BeginForm("Read", "Upload", FormMethod.Post))
+{
+    <div>
+        <label for="modelSelect">Modelos:</label>
+        <select id="modelSelect" name="selectedModel" class="form-control">
+            <option value="">-- Selecione um Modelo --</option>
+            @foreach (var type in ViewBag.Models as string[])
+            {
+                <option value="@type">@type</option>
+            }
+        </select>
+        <input type="hidden" name="id" value="@ViewBag.Id" />
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+}
+
+@{
+    if (Model is not null)
+    {
+        <h4>Seguem os dados da análise</h4>
+        <hr />
+        <div class="row">
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Document.Description)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Document.Description)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.IaResponse)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.IaResponse)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.JsonResult)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.JsonResult)
+                </dd>
+                <dt class="col-sm-2">
+                    Anexo
+                </dt>
+                <dd class="col-sm-10">
+                    <img src="@Model.FileNamePath" class="img-fluid" />
+                </dd>
+            </dl>
+
+        </div>
+
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+
+        @section Scripts {
+        @{
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+            }
+        }
+
+    }
+}

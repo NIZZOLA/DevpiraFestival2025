@@ -1,0 +1,151 @@
+﻿@model IntellAccount.Models.ChatHistory
+@{
+    ViewData["Title"] = "Chat";
+}
+
+<div class="chat-container">
+    <div class="chat-header">
+        <h1>Chat</h1>
+    </div>
+
+    <div class="chat-history">
+        <div id="messageContainer" class="messages">
+            <!-- Messages will be displayed here -->
+            @foreach (var message in Model.Interactions)
+            {
+                var senderClass = message.BotResponse ? "bot": "user" ;
+                <div class="message @senderClass">
+                    @message.UserMessage
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="chat-input-section">
+        <form id="chatForm" method="post">
+            <div class="input-group">
+                <input type="text" 
+                       id="textMessage" 
+                       name="textMessage" 
+                       class="form-control" 
+                       placeholder="Type your message..." 
+                       required />
+                <button type="submit" class="btn btn-primary">Send</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .chat-container {
+        display: flex;
+        flex-direction: column;
+        height: 70vh;
+        max-width: 800px;
+        margin: 0 auto;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .chat-header {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .chat-header h1 {
+        margin: 0;
+        font-size: 24px;
+    }
+
+    .chat-history {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        background-color: #fff;
+    }
+
+    .messages {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .message {
+        padding: 10px 15px;
+        border-radius: 8px;
+        max-width: 70%;
+        word-wrap: break-word;
+    }
+
+    .message.user {
+        align-self: flex-end;
+        background-color: #007bff;
+        color: white;
+    }
+
+    .message.bot {
+        align-self: flex-start;
+        background-color: #e9ecef;
+        color: black;
+    }
+
+    .chat-input-section {
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-top: 1px solid #ddd;
+    }
+
+    .input-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .input-group input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .input-group button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .input-group button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<script>
+    /*
+    document.getElementById('chatForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const textMessage = document.getElementById('textMessage').value;
+        if (textMessage.trim() === '') return;
+
+        // Add user message to chat
+        addMessage(textMessage, 'user');
+        document.getElementById('textMessage').value = '';
+    });
+
+    function addMessage(text, sender) {
+        const messageContainer = document.getElementById('messageContainer');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${sender}`;
+        messageDiv.textContent = text;
+        messageContainer.appendChild(messageDiv);
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+    }*/
+</script>
+
+
